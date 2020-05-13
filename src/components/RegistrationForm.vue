@@ -1,18 +1,11 @@
 <template>
   <div class="form-registration">
-      <!-- <div class="message_block">
-    <div v-if="status=='success'">
-      <p class="message message--success">{{ msg }}</p>
-    </div>
-    <div v-else>
-      <p v-if="status=='error'" class="message message--error">{{ msg }}</p>
-      </div>
-      </div> -->
+
     <form class="form" @submit.prevent="onSubmit">
         <div class="group-field" :class="{ 'field--error wobble-error': $v.email.$error }">
             <div class="instruction">Введите адрес электронной почты</div>
               <div class="input-block">
-                <input v-model="email">
+                <input v-model="email" :disabled="disabled" required>
                 <label >Адрес электронной почты</label>
               </div>
             <div class="error_block">
@@ -22,7 +15,7 @@
         </div>
           <div class="group-field" :class="{ 'field--error wobble-error': $v.password.$error }">
                 <div class="input-block">
-                    <input type="password" v-model="password">
+                    <input type="password" v-model="password" :disabled="disabled" required>
                     <label>Пароль</label>
                 </div>
                 <div class="error_block">
@@ -62,7 +55,7 @@
     },
 
     validations: {
-      
+
       email: {
         required,
         email,
@@ -70,9 +63,9 @@
 
       password: {
         required,
-        betweenLength: betweenLength(4, 18),
+        betweenLength: betweenLength(6, 18),
       }
-      
+
     },
 
     methods: {
@@ -84,13 +77,18 @@
         if(!this.$v.$invalid){
           const {email, password} = this
           console.log('userRegister')
-          await this.$store.dispatch('userRegister', {email, password})
-          // this.disabled = true
-          this.$router.push('/login')
+          const rez = await this.$store.dispatch('userRegister', {email, password})
+          if (rez){
+            this.onSuccess()
+          }
         }
+        this.disabled = false
       }
+
+
+
       //     const rez  = await this.$store.dispatch('userRegister', {email, password})
-       
+
       //  }
       //  if (rez) {
       //       this.onSuccess()
@@ -99,7 +97,7 @@
       //     this.disabled = false
       //   },
 
-  
+
 
         // created() {
         //   this.$emit('ready')
