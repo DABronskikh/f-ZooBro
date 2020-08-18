@@ -7,7 +7,7 @@
     <img class="bg-content bg-content__small-bone" src="../assets/small_bone_bg.svg" alt="">
     <img class="bg-content bg-content__paws" src="../assets/paws_bg.svg" alt="">
     <img class="bg-content bg-content__big-box" src="../assets/big-box_bg.svg" alt=""> -->
-    <main class="landing-container__main">
+    <div class="landing-container__main">
       <div class="order">
         <section class="order__container">
           <h1 class="order__head">Любовь и забота хозяина в одной коробочке специально для тебя</h1>
@@ -15,7 +15,7 @@
             Лучше и полезнее, чем обувь хозяина
           </p>
           <router-link class="order-button__text" to="/order">
-            <div class="order__button">
+            <div class="order__button" @click="$emit('toggle')">
               <span class="order__button-text">Заказать</span>
               <img class="paw paw_25" src="../assets/paw.svg" alt="">
             </div>
@@ -23,8 +23,7 @@
         </section>
         <div class="order__images-content">
           <img class="order__images-content_yelow-bone" src="../assets/yelow-bone.svg" alt="">
-          <img  class="order__images-content_dog" src="../assets/dog_PNG50331.png" alt="">
-          <img  class="order__images-content_dog-mobile" src="../assets/dog_mobile.png" alt="">
+          <div class="order__images-content_dog-with-box"></div>
         </div>
       </div>
       <div class="how-work">
@@ -64,7 +63,7 @@
         <div class="order-button">
           <div class="order-button__container">
             <router-link class="order-button__text" to="/order">
-              <div class="how-work__button">
+              <div class="how-work__button" @click="$emit('toggle')">
                 <span class="how-work__button-text">Заказать</span>
                 <img class="paw paw_25" src="../assets/paw.svg" alt="">
               </div>
@@ -108,7 +107,7 @@
         <div class="order-button">
           <div class="order-button__container">
             <router-link class="order-button__text" to="/order">
-              <div class="how-work__button">
+              <div class="how-work__button" @click="$emit('toggle')">
                 <span class="how-work__button-text">Заказать</span>
                 <img class="paw paw_25" src="../assets/paw.svg" alt="">
               </div>
@@ -213,7 +212,7 @@
           <div class="order-button">
             <div class="order-button__container">
               <router-link class="order-button__text" to="/fast-order">
-                <div class="how-work__button">
+                <div class="how-work__button" @click="$emit('toggle')">
                   <span class="how-work__button-text">Быстрый заказ</span>
                   <img class="paw paw_25" src="../assets/paw.svg" alt="">
                 </div>
@@ -260,7 +259,7 @@
         </div>
         <div class="faq__image"></div>
       </div>
-    </main>
+    </div>
     <footer class="footer">
       <div class="footer__container">
         <div class="social-icons">
@@ -415,6 +414,8 @@ export default {
     if (url['reset-password']){
       this.changePasswordModal=true
       const resetPassword = url['reset-password']
+    } else if (document.querySelector('.' + url.class)) {
+      document.querySelector('.' + url.class).scrollIntoView()
     }
   },
   methods:{
@@ -538,18 +539,6 @@ main {
   background: #fff;
   background-image: url('../assets/back-land-1920.svg');
   background-position: center 1200px;
-  // animation: animatedBackground 60s linear infinite;
-	// -moz-animation: animatedBackground 60s linear infinite;
-	// -webkit-animation: animatedBackground 60s linear infinite;
- 	// -o-animation: animatedBackground 60s linear infinite;
-  //  @keyframes animatedBackground {
-  //   0 {
-  //       background-position: 0 0
-  //   }
-  //   100% {
-  //       background-position: -600px 600px /* анимируем свойство background-position */
-  //   }
-  //  }
   &__main {
     display: grid;
     grid-template-columns: 100%;
@@ -561,9 +550,6 @@ main {
     display: block;
   }
 }
-.main {
-}
-
 .order {
   width: 100%;
   height: 787px;
@@ -577,6 +563,7 @@ main {
     width: 50%;
     padding-top: 161px;
     padding-left: 240px;
+    z-index: 105;
   }
 
   &__head {
@@ -633,24 +620,6 @@ main {
     overflow:initial;
     width: 100%;
     position: relative;
-    &_yelow-bone {
-      position: absolute;
-      width: max-content;
-      right: 0;
-      top: 30px;
-      z-index: 100;
-    }
-    &_dog {
-      position: absolute;
-      width: max-content;
-      right: 50px;
-      top: 280px;
-      z-index: 101;
-    }
-    &_dog-mobile {
-      position: absolute;
-      display: none;
-    }
   }
 }
 
@@ -1167,19 +1136,6 @@ main {
     &__text {
       width: 605px;
     }
-
-    &__images-content {
-      &_yelow-bone {
-        width: calc(956px + 1%);
-        left: -190px;
-        top: 100px;
-      }
-      &_dog {
-        width: calc(725px + 1%);
-        left: -150px;
-        top: 380px;
-      }
-    }
   }
 
   .what-in-box {
@@ -1675,6 +1631,77 @@ main {
     background: url('../assets/back-faq-360.svg') no-repeat left bottom;
   }
   }
+}
 
+.order__images-content {
+  &_yelow-bone {
+    position: absolute;
+    width: calc(420px + 1%);
+    top: -25px;
+    left: 60px;
+
+    @media (min-width: 426px) {
+      width: calc(956px + 1%);
+      left: -190px;
+      top: 100px;
+    }
+
+    @media (min-width: 1440px) {
+      width: calc(956px + 1%);
+      left: unset;
+      right: -200px;
+      top: 100px;
+    }
+    @media (min-width: 1920px) {
+      width: max-content;
+      right: 0;
+      top: 30px;
+    }
+  }
+  &_dog-with-box {
+    display: block;
+    position: absolute;
+    z-index: 101;
+    width: 527px;
+    left: -15px;
+    top: 50%;
+
+    &:after {
+      content: '';
+      display: block;
+      padding-top: 56.68%;
+      background-image: url('../assets/dog-with-box-sm.png');
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-size: contain;
+    }
+
+    @media (min-width: 1024px) {
+      width: 1006px;
+      left: -400px;
+      top: unset;
+      bottom: -25%;
+      right: -50px;
+      &:after {
+        padding-top: 55.86%;
+        background-image: url('../assets/dog-with-box-md.png');
+      }
+    }
+
+    @media (min-width: 1440px) {
+      left: unset;
+      right: -50px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 1247px;
+      left: unset;
+      bottom: -15%;
+      &:after {
+        padding-top: 55.89%;
+        background-image: url('../assets/dog-with-box-lg.png');
+      }
+    }
+  }
 }
 </style>
