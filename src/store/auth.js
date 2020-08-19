@@ -39,9 +39,6 @@ export default {
             if (json.status === 1) {
               const { data } = json
               commit('setUserHeader', data)
-              commit('clearSnackbar')
-              commit('setSnackbarMsg', 'Успешная авторизация')
-              commit('setSnackbarType', 'success')
               return true
             } else {
               const { message } = json
