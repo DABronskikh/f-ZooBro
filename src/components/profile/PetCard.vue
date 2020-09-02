@@ -6,7 +6,7 @@
       <p v-if="!pet.empty" @click="changeData()" class="edit">Изменить данные</p>
     </span>
     <span class="label">Порода:</span>
-    <span class="text">{{ pet.breed }}</span>
+    <span class="text" style="word-break: break-all;">{{ pet.breed }}</span>
     <span class="label">Дата рождения:</span>
     <span class="text">{{ yearsOldString }}</span>
     <span class="label">Пол:</span>

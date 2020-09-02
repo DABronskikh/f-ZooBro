@@ -21,13 +21,13 @@
                 <div @click="showMap = true" class="rout-buttons__dilivery">Доставка</div>
                 <div class="rout-buttons__how-work"><p class="router-link" @click="routeFunc('how-work')">Как это работает</p></div>
                 <div class="rout-buttons__faq"><p class="router-link" @click="routeFunc('faq')">FAQ</p></div>
-                <div class="rout-buttons__tel"><p class="router-link" @click="routeFunc('footer')" >Контакты</p></div>   
-                <div class="rout-buttons__auth" v-if="!token">
+                <div class="rout-buttons__tel"><p class="router-link" @click="routeFunc('footer')" >Контакты</p></div>
+                <div class="rout-buttons__auth" v-if="!isUserLoggedIn">
                     <button class="rout-buttons__auth-button">
                         <a  @click="loginModal = true">Войти</a>
                     </button>
                 </div>
-                <div class="rout-buttons__profile" v-if="token">
+                <div class="rout-buttons__profile" v-if="isUserLoggedIn">
                     <button class="rout-buttons__profile-button " type="button">
                         <router-link class="router-link" to="/profile"><img src="../assets/profile-icon.svg" alt=""></router-link>
                     </button>
@@ -149,7 +149,7 @@
                 <NewPassword
                         :toggleLoginModal="toggleLoginModal"
                         :toggleNewPasswordModal="toggleNewPasswordModal"
-                        :toggleChangePasswordModal="toggleChangePasswordModal" 
+                        :toggleChangePasswordModal="toggleChangePasswordModal"
                                        />
                 <template slot="close-icon">
                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -204,7 +204,7 @@
         'snackbarType',
         'snackbarMsg',
         'snackbarObj',
-        'token',
+        'isUserLoggedIn',
       ]),
     },
     methods:{
